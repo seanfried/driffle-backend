@@ -6,6 +6,7 @@ import { addToCart } from '../store/slices/cartSlice';
 import { toast } from 'react-toastify';
 import ProductCard from '../components/ProductCard';
 import Reviews from '../components/Reviews';
+import Meta from '../components/SEO/Meta';
 
 const ProductDetail = () => {
   const { slug } = useParams();
@@ -93,6 +94,12 @@ const ProductDetail = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen pb-12">
+      <Meta 
+        title={`${product.title} - Acheter Clé ${product.platform}`}
+        description={product.description?.substring(0, 160) + '...'}
+        image={product.images[0]?.url}
+        url={`/products/${product.slug}`}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumbs */}
         <nav className="flex mb-8 text-sm text-gray-500">

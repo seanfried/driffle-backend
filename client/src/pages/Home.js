@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../store/slices/productsSlice';
 import ProductCard from '../components/ProductCard';
+import Meta from '../components/SEO/Meta';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Meta 
+        title="Accueil" 
+        description="Bienvenue sur Driffle Marketplace. Découvrez les meilleures offres sur les jeux vidéo, cartes cadeaux et DLC."
+      />
       {/* Hero Section */}
       <section className="relative bg-gray-900 text-white overflow-hidden">
         {/* Abstract Background */}
