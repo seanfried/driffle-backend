@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCart, removeFromCart, updateCartItem } from '../store/slices/cartSlice';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import couponService from '../services/couponService';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { cart, isLoading } = useSelector((state) => state.cart);
+  const [couponCode, setCouponCode] = React.useState('');
+  const [discount, setDiscount] = React.useState(null);
 
   useEffect(() => {
     dispatch(getCart());
@@ -22,6 +25,23 @@ const Cart = () => {
 
   const handleRemoveItem = (productId) => {
     dispatch(removeFromCart(productId));
+  };
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) return;
+    try {
+      const response = await couponService.applyCoupon(couponCode);
+      setDiscount(response.data);
+      toast.success('Coupon applied!');
+    } catch (error) {
+      setDiscount(null);
+      toast.error(error.response?.data?.message || 'Invalid coupon');
+    }
+  };
+
+  const calculateTotal = () => {
+    if (discount) return discount.finalTotal;
+    return cart.subtotal;
   };
 
   if (isLoading) {
@@ -138,6 +158,12 @@ const Cart = () => {
                 <span className="text-gray-600">Subtotal</span>
                 <span className="font-medium">€{cart.subtotal.toFixed(2)}</span>
               </div>
+              {discount && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>Discount ({discount.code})</span>
+                  <span>-€{discount.discountAmount.toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Shipping</span>
                 <span className="font-medium">Free</span>
@@ -145,8 +171,28 @@ const Cart = () => {
               <div className="border-t pt-2">
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total</span>
-                  <span>€{cart.subtotal.toFixed(2)}</span>
+                  <span>€{calculateTotal().toFixed(2)}</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Coupon Input */}
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Have a coupon?</label>
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  placeholder="Enter code"
+                  className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                />
+                <button
+                  onClick={handleApplyCoupon}
+                  className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700"
+                >
+                  Apply
+                </button>
               </div>
             </div>
             

@@ -25,6 +25,7 @@ const AdminProductForm = lazy(() => import('./pages/admin/ProductForm'));
 const AdminOrders = lazy(() => import('./pages/admin/Orders'));
 const AdminOrderDetail = lazy(() => import('./pages/admin/OrderDetail'));
 const AdminUsers = lazy(() => import('./pages/admin/Users'));
+const AdminCoupons = lazy(() => import('./pages/admin/Coupons'));
 
 // Loading component
 const PageLoader = () => (
@@ -108,6 +109,11 @@ function App() {
               <Route path="admin/users" element={
                 <AdminRoute>
                   <AdminUsers />
+                </AdminRoute>
+              } />
+              <Route path="admin/coupons" element={
+                <AdminRoute>
+                  <AdminCoupons />
                 </AdminRoute>
               } />
             </Route>
