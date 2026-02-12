@@ -13,6 +13,7 @@ const orderRoutes = require('./routes/orders');
 const subscriptionRoutes = require('./routes/subscriptions');
 const adminRoutes = require('./routes/admin');
 const communicationRoutes = require('./routes/communication');
+const couponRoutes = require('./routes/coupons');
 
 const app = express();
 
@@ -95,6 +96,7 @@ app.use('/api', cartRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', subscriptionRoutes);
 app.use('/api', communicationRoutes);
+app.use('/api/coupons', couponRoutes);
 app.use('/api/admin', adminRoutes);
 
 // 404 handler

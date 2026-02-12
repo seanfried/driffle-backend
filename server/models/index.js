@@ -4,6 +4,7 @@ const Order = require('./Order');
 const Cart = require('./Cart');
 const Subscription = require('./Subscription');
 const Review = require('./Review');
+const Coupon = require('./Coupon');
 const Promotion = require('./Promotion');
 const AuditLog = require('./AuditLog');
 const Newsletter = require('./Newsletter');
@@ -16,6 +17,7 @@ module.exports = {
   Cart,
   Subscription,
   Review,
+  Coupon,
   Promotion,
   AuditLog,
   Newsletter,
