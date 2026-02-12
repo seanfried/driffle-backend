@@ -42,11 +42,16 @@ const register = async (req, res) => {
     const token = generateToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
 
-    await sendEmailVerificationEmail(user, emailVerificationToken);
+    // Send welcome email immediately (no verification required for MVP)
+    try {
+      await sendWelcomeEmail(user);
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError);
+    }
 
     res.status(201).json({
       success: true,
-      message: 'User registered successfully. Please check your email to verify your account.',
+      message: 'User registered successfully.',
       data: {
         user: {
           id: user._id,

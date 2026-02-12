@@ -162,7 +162,7 @@ const createOrder = async (req, res) => {
     // Send confirmation email
     if (req.user) {
       try {
-        await sendOrderConfirmationEmail(order, req.user);
+        await sendOrderConfirmationEmail(req.user, order);
       } catch (emailError) {
         console.error('Failed to send order confirmation email:', emailError);
       }
