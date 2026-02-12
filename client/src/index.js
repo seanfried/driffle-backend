@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import App from './App';
 import { store } from './store';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,3 +31,6 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+// Register the service worker for PWA capabilities
+serviceWorkerRegistration.register();
